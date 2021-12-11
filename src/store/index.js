@@ -5,32 +5,35 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    joke: {},
+    joke: "",
     snake_joke: "",
     loud_joke: "",
   },
 
   mutations: {
+    // Updating our joke variable to be what the api sends back
     update_joke(state, payload) {
       state.joke = payload;
     },
-    joke_snaked(state, payload) {
-      state.snake_joke = payload;
+    // Take the joke and turn it LOUD
+    get_loud_joke_mutation(state, payload) {
+      state.loud_joke = payload.toUpperCase();
     },
-
-    joke_loud(state, payload) {
-      state.loud_joke = payload;
-    }
+    // Take the joke and turn it into snake case
+    snake_joke(state, payload) {
+      state.snake_joke = payload.split(' ').join('_');
+    },
 
   },
   actions: {
 
     get_joke(store) {
+      // API call that gets a joke to display on the page, or errors
       axios.request({
         url: "https://geek-jokes.sameerkumar.website/api?format=json",
       })
         .then((response) => {
-          store.commit("update_joke", response.data);
+          store.commit("update_joke", response.data.joke);
         })
         .catch((error) => {
           error;
@@ -41,18 +44,9 @@ export default new Vuex.Store({
         });
     },
 
-    snake_joke(store) {
-      var snaked = store.state.joke.joke.split(' ').join('_');
-      // this.store.commit("joke_snaked", snaked);
-      console.log(snaked)
-      store.commit('joke_snaked', snaked)
-    },
 
-    loud_joke(store) {
-      var loud = store.state.joke.joke.toUpperCase();
-      console.log(loud)
-      store.commit('joke_loud', loud)
-    },
+
+
   },
   modules: {
 

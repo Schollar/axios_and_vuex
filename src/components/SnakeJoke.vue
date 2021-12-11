@@ -9,12 +9,14 @@
 export default {
   name: "snake-joke",
   methods: {
+    // Calling our snake joke in mutations
     get_joke_snaked() {
-      this.$store.dispatch("snake_joke");
+      this.$store.commit("snake_joke", this.$store.state["joke"]);
     },
   },
   computed: {
     snake_joke() {
+      // getting snake joke from our state and returning it to display on the page
       return this.$store.state["snake_joke"];
     },
   },

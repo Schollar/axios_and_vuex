@@ -9,6 +9,7 @@ export default {
   name: "joke-button",
   methods: {
     get_a_joke() {
+      // Calling our get_joke action to make api call when button is clicked
       this.$store.dispatch("get_joke");
     },
   },
